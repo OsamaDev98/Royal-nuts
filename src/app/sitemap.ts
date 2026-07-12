@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://royalnuts.com";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://royal-nuts.net";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();

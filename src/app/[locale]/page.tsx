@@ -1,7 +1,7 @@
-import { getDbProducts } from "@/lib/products-data";
+import { getDbProducts, type ProductData } from "@/lib/products-data";
 import LandingPageClient from "./LandingPageClient";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://royalnuts.com";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://royal-nuts.net";
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -10,7 +10,7 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   const products = await getDbProducts();
-  const featuredProducts = products.filter((p) => p.isFeatured).slice(0, 4);
+  const featuredProducts = products.filter((p: ProductData) => p.isFeatured).slice(0, 4);
 
   /* ── JSON-LD Structured Data ──────────────────────────────── */
   const jsonLd = {
@@ -45,7 +45,7 @@ export default async function Page({ params }: PageProps) {
         name: "Royal Nuts Factory",
         url: BASE_URL,
         telephone: "+20-100-000-0000",
-        email: "info@royalnuts.com",
+        email: "info@royal-nuts.net",
         address: {
           "@type": "PostalAddress",
           addressCountry: "EG",

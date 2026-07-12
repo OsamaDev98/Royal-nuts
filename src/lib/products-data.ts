@@ -181,7 +181,7 @@ export async function getDbProducts() {
       orderBy: { id: 'asc' }
     });
     if (products.length > 0) {
-      return products.map(p => ({
+      return products.map((p: any): ProductData => ({
         slug: p.slug,
         category: p.category,
         nameAr: p.nameAr,
@@ -211,7 +211,7 @@ export async function getDbProductBySlug(slug: string) {
   try {
     const { db } = await import('@/lib/db');
     if (!db) return staticProducts.find(p => p.slug === slug) || null; // no valid DB configured
-    const product = await db.product.findUnique({
+    const product: any = await db.product.findUnique({
       where: { slug }
     });
     if (product) {
@@ -233,7 +233,7 @@ export async function getDbProductBySlug(slug: string) {
         image: product.image,
         price: product.price,
         isFeatured: product.isFeatured
-      };
+      } satisfies ProductData;
     }
   } catch (error) {
     console.warn(`Database query for slug ${slug} failed, using static fallback:`, error);

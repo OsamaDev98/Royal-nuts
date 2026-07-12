@@ -25,7 +25,7 @@ const poppins = Poppins({
   preload: false, // only preload when en locale
 });
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://royalnuts.com";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://royal-nuts.net";
 
 export async function generateMetadata({
   params,
@@ -51,8 +51,26 @@ export async function generateMetadata({
     },
     description,
     keywords: isAr
-      ? ["فول سوداني", "سمسم", "زبدة فول سوداني", "طحينة", "مصنع رويال", "منتجات طبيعية", "تصدير", "فرز إلكتروني"]
-      : ["peanuts", "sesame", "peanut butter", "tahini", "Royal Nuts", "natural products", "export", "electronic sorting"],
+      ? [
+          "فول سوداني",
+          "سمسم",
+          "زبدة فول سوداني",
+          "طحينة",
+          "مصنع رويال",
+          "منتجات طبيعية",
+          "تصدير",
+          "فرز إلكتروني",
+        ]
+      : [
+          "peanuts",
+          "sesame",
+          "peanut butter",
+          "tahini",
+          "Royal Nuts",
+          "natural products",
+          "export",
+          "electronic sorting",
+        ],
     authors: [{ name: "Royal Nuts Factory" }],
     creator: "Royal Nuts Factory",
     publisher: "Royal Nuts Factory",
@@ -60,6 +78,10 @@ export async function generateMetadata({
       index: true,
       follow: true,
       googleBot: { index: true, follow: true, "max-image-preview": "large" },
+    },
+    other: {
+      "theme-color": "#1C2820",
+      "color-scheme": "dark",
     },
     openGraph: {
       type: "website",
@@ -74,7 +96,9 @@ export async function generateMetadata({
           url: "/images/og-image.png",
           width: 1200,
           height: 630,
-          alt: isAr ? "مصنع رويال للفول السوداني والسمسم" : "Royal Nuts Factory",
+          alt: isAr
+            ? "مصنع رويال للفول السوداني والسمسم"
+            : "Royal Nuts Factory",
         },
       ],
     },
@@ -94,7 +118,9 @@ export async function generateMetadata({
   };
 }
 
-interface Params { locale: string; }
+interface Params {
+  locale: string;
+}
 
 export default async function LocaleLayout({
   children,
@@ -119,14 +145,6 @@ export default async function LocaleLayout({
       dir={dir}
       className={`h-full ${cairo.variable} ${poppins.variable}`}
     >
-      <head>
-        {/* Preconnect to Google Fonts CDN */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Theme colour for mobile browsers */}
-        <meta name="theme-color" content="#1C2820" />
-        <meta name="color-scheme" content="dark" />
-      </head>
       <body
         className={`${bodyFont} min-h-full flex flex-col antialiased`}
         style={{ background: "#1C2820", color: "#F0EDE8" }}

@@ -1,11 +1,13 @@
-import { PrismaClient } from '@prisma/client';
+// db.ts — Prisma v7 compatible, fully resilient
+// Uses dynamic require() so a missing/ungenerated @prisma/client
+// never crashes the module at import time.
 
-const globalForPrisma = globalThis as unknown as { prisma: PrismaClient | null };
+const globalForPrisma = globalThis as unknown as { prisma: unknown };
 
-function createPrismaClient(): PrismaClient | null {
+function createPrismaClient(): unknown | null {
   const url = process.env.DATABASE_URL;
 
-  // Skip DB entirely when no URL or using the default placeholder
+  // Return null immediately for missing or placeholder URLs
   if (
     !url ||
     url.includes('johndoe') ||
@@ -15,16 +17,17 @@ function createPrismaClient(): PrismaClient | null {
   }
 
   try {
-    // Prisma v7: PrismaClient reads DATABASE_URL from env automatically.
-    // No datasourceUrl option exists in v7 — Next.js loads .env for us.
+    // Dynamic require so a missing generated client doesn't crash the import
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { PrismaClient } = require('@prisma/client');
     return new PrismaClient();
   } catch (err) {
-    console.warn('[db] PrismaClient init failed:', err);
+    console.warn('[db] PrismaClient unavailable:', (err as Error).message);
     return null;
   }
 }
 
-export const db: PrismaClient | null =
+export const db: any =
   globalForPrisma.prisma !== undefined
     ? globalForPrisma.prisma
     : createPrismaClient();
