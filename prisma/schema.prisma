@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  category    String   // peanut, butter, tahini, sesame, etc.
+  nameAr      String
+  nameEn      String
+  descAr      String
+  descEn      String
+  featuresAr  String[]
+  featuresEn  String[]
+  nutritionAr Json
+  nutritionEn Json
+  sizesAr     String[]
+  sizesEn     String[]
+  usesAr      String[]
+  usesEn      String[]
+  image       String
+  price       String
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model ContactMessage {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  phone     String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id           Int      @id @default(autoincrement())
+  productSlug  String
+  productName  String
+  customerName String
+  phone        String
+  quantity     Int
+  size         String
+  status       String   @default("pending")
+  createdAt    DateTime @default(now())
+}
