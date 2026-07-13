@@ -40,7 +40,7 @@ export default function OrderModal({ productSlug, productName, sizes, isOpen, on
     try {
       await submitOrder({ productSlug, productName, customerName: data.customerName, phone: data.phone, quantity: data.quantity, size: data.size });
       const msg = `السلام عليكم، أود طلب المنتج التالي من مصنع رويال:\n• المنتج: ${productName}\n• الحجم: ${data.size}\n• الكمية: ${data.quantity}\n• الاسم: ${data.customerName}\n• الهاتف: ${data.phone}`;
-      window.open(`https://wa.me/201000000000?text=${encodeURIComponent(msg)}`, "_blank");
+      window.open(`https://wa.me/201065863552?text=${encodeURIComponent(msg)}`, "_blank");
       reset();
       onClose();
     } catch (err) { console.error(err); }
@@ -105,7 +105,7 @@ export default function OrderModal({ productSlug, productName, sizes, isOpen, on
                 </div>
                 <div>
                   <label className="block text-[10px] font-bold text-[#F0EDE8]/45 uppercase tracking-wider mb-1.5">{tCommon("phone")}</label>
-                  <input type="text" placeholder="+20 100 000 0000" {...register("phone")}
+                  <input type="text" placeholder="+20 106 586 3552" {...register("phone")}
                     className={inputBase} style={inputStyle(!!errors.phone)} />
                   {errors.phone && <p className="mt-1 text-xs text-rose-400">{errors.phone.message}</p>}
                 </div>

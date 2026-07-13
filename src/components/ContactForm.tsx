@@ -87,7 +87,7 @@ export default function ContactForm() {
             <label htmlFor="cf-phone" className="block text-xs font-bold text-[#F0EDE8]/50 uppercase tracking-wider mb-2">
               {t("phone")}
             </label>
-            <input id="cf-phone" type="text" placeholder="+20 100 000 0000" {...register("phone")}
+            <input id="cf-phone" type="text" placeholder="+20 106 586 3552" {...register("phone")}
               className={inputBase} style={inputStyle(!!errors.phone)} />
             {errors.phone && <p className="mt-1.5 text-xs text-rose-400 font-semibold">{errors.phone.message}</p>}
           </div>

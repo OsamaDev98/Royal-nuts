@@ -837,8 +837,8 @@ export default function LandingPageClient({
                     {
                       Icon: Phone,
                       label: t("common.call"),
-                      value: "+20 100 000 0000",
-                      href: "tel:+201000000000",
+                      value: "+20 106 586 3552",
+                      href: "tel:+201065863552",
                     },
                     {
                       Icon: Mail,
@@ -879,7 +879,7 @@ export default function LandingPageClient({
                     style={{ borderTop: "1px solid rgba(255,255,255,0.07)" }}
                   >
                     <a
-                      href="https://wa.me/201000000000"
+                      href="https://wa.me/201065863552"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-xs text-white hover:opacity-90 transition-all"
@@ -889,7 +889,7 @@ export default function LandingPageClient({
                       {t("common.whatsapp")}
                     </a>
                     <a
-                      href="tel:+201000000000"
+                      href="tel:+201065863552"
                       className="flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-xs hover:opacity-90 transition-all"
                       style={{
                         background: `linear-gradient(135deg,${GOLD},#E8C875)`,
