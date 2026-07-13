@@ -3,9 +3,10 @@ import { setRequestLocale } from "next-intl/server";
 import LandingPageClient from "./LandingPageClient";
 
 const rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://royal-nuts.net";
-const BASE_URL = rawBaseUrl.startsWith("http://") || rawBaseUrl.startsWith("https://")
-  ? rawBaseUrl
-  : `https://${rawBaseUrl}`;
+const BASE_URL =
+  rawBaseUrl.startsWith("http://") || rawBaseUrl.startsWith("https://")
+    ? rawBaseUrl
+    : `https://${rawBaseUrl}`;
 
 interface PageProps {
   params: Promise<{ locale: string }>;
@@ -15,7 +16,9 @@ export default async function Page({ params }: PageProps) {
   const { locale } = await params;
   setRequestLocale(locale);
   const products = await getDbProducts();
-  const featuredProducts = products.filter((p: ProductData) => p.isFeatured).slice(0, 4);
+  const featuredProducts = products
+    .filter((p: ProductData) => p.isFeatured)
+    .slice(0, 4);
 
   /* ── JSON-LD Structured Data ──────────────────────────────── */
   const jsonLd = {
@@ -29,7 +32,7 @@ export default async function Page({ params }: PageProps) {
         logo: { "@type": "ImageObject", url: `${BASE_URL}/images/logo.png` },
         contactPoint: {
           "@type": "ContactPoint",
-          telephone: "+20-100-000-0000",
+          telephone: "+20-106-586-3552",
           contactType: "customer service",
           areaServed: ["EG", "SA", "AE", "EU"],
           availableLanguage: ["Arabic", "English"],
@@ -49,7 +52,7 @@ export default async function Page({ params }: PageProps) {
         "@id": `${BASE_URL}/#localbusiness`,
         name: "Royal Nuts Factory",
         url: BASE_URL,
-        telephone: "+20-100-000-0000",
+        telephone: "+20-106-586-3552",
         email: "info@royal-nuts.net",
         address: {
           "@type": "PostalAddress",

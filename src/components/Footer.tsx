@@ -70,10 +70,10 @@ export default function Footer({ locale }: FooterProps) {
           </div>
           <div className="flex flex-col sm:flex-row gap-3 shrink-0">
             <a
-              href="https://wa.me/201000000000"
+              href="https://wa.me/201065863552"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm text-[#1C2820] transition-all duration-300 hover:opacity-90 hover:scale-105"
+              className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-sm text-[#1C2820] transition-all duration-300 hover:opacity-90 hover:scale-105"
               style={{ background: "linear-gradient(135deg,#C9A84C,#E8C875)" }}
             >
               <MessageCircle className="w-4 h-4" />
@@ -81,7 +81,7 @@ export default function Footer({ locale }: FooterProps) {
             </a>
             <Link
               href="/#contact"
-              className="flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm text-white transition-all duration-300 hover:bg-white/10"
+              className="flex items-center justify-center gap-2 px-6 py-3 rounded-full font-bold text-sm text-white transition-all duration-300 hover:bg-white/10"
               style={{ border: "1px solid rgba(255,255,255,0.22)" }}
             >
               {t("nav.contact")}
@@ -120,12 +120,12 @@ export default function Footer({ locale }: FooterProps) {
             <div className="flex items-center gap-2">
               {[
                 {
-                  href: "https://wa.me/201000000000",
+                  href: "https://wa.me/201065863552",
                   icon: MessageCircle,
                   title: t("common.whatsapp"),
                 },
                 {
-                  href: "tel:+201000000000",
+                  href: "tel:+201065863552",
                   icon: Phone,
                   title: t("common.call"),
                 },
@@ -205,8 +205,8 @@ export default function Footer({ locale }: FooterProps) {
                 },
                 {
                   Icon: Phone,
-                  value: "+20 100 000 0000",
-                  href: "tel:+201000000000",
+                  value: "+20 106 586 3552",
+                  href: "tel:+201065863552",
                 },
                 {
                   Icon: Mail,
@@ -243,7 +243,16 @@ export default function Footer({ locale }: FooterProps) {
               : "Royal Peanut & Sesame Factory. All Rights Reserved."}
           </p>
           <p className="text-[#F0EDE8]/25 text-xs">
-            {isAr ? "صُنع بفخر واحترافية 💚" : "Crafted with pride 💚"}
+            <a
+              href="mailto:osamadev921@gmail.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#C9A84C]"
+            >
+              {isAr
+                ? "صُنع بفخر واحترافية بواسطة Osama dev 💚"
+                : "Crafted with pride and passion by Osama dev 💚"}
+            </a>
           </p>
         </div>
       </div>
