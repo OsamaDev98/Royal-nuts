@@ -2,7 +2,10 @@ import { getDbProducts, type ProductData } from "@/lib/products-data";
 import { setRequestLocale } from "next-intl/server";
 import LandingPageClient from "./LandingPageClient";
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://royal-nuts.net";
+const rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://royal-nuts.net";
+const BASE_URL = rawBaseUrl.startsWith("http://") || rawBaseUrl.startsWith("https://")
+  ? rawBaseUrl
+  : `https://${rawBaseUrl}`;
 
 interface PageProps {
   params: Promise<{ locale: string }>;

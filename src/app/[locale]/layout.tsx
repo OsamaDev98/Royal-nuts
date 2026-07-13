@@ -29,7 +29,10 @@ const poppins = Poppins({
   preload: false, // only preload when en locale
 });
 
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://royal-nuts.net";
+const rawBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://royal-nuts.net";
+const BASE_URL = rawBaseUrl.startsWith("http://") || rawBaseUrl.startsWith("https://")
+  ? rawBaseUrl
+  : `https://${rawBaseUrl}`;
 
 export async function generateMetadata({
   params,
