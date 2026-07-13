@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // db.ts — Prisma v7 compatible, fully resilient
 // Uses dynamic require() so a missing/ungenerated @prisma/client
 // never crashes the module at import time.

@@ -79,14 +79,14 @@ export default function Footer({ locale }: FooterProps) {
               <MessageCircle className="w-4 h-4" />
               {t("common.whatsapp")}
             </a>
-            <a
+            <Link
               href="/#contact"
               className="flex items-center gap-2 px-6 py-3 rounded-full font-bold text-sm text-white transition-all duration-300 hover:bg-white/10"
               style={{ border: "1px solid rgba(255,255,255,0.22)" }}
             >
               {t("nav.contact")}
               <ArrowUpRight className="w-4 h-4" />
-            </a>
+            </Link>
           </div>
         </div>
       </div>
@@ -159,13 +159,13 @@ export default function Footer({ locale }: FooterProps) {
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.label}>
-                  <a
+                  <Link
                     href={link.href}
                     className="text-sm text-[#F0EDE8]/40 hover:text-[#C9A84C] transition-colors duration-300 flex items-center gap-2 group"
                   >
                     <span className="h-px w-4 bg-[#C9A84C]/0 group-hover:bg-[#C9A84C]/60 transition-all duration-300" />
                     {link.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

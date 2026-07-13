@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getDbProductBySlug } from "@/lib/products-data";
-import { getTranslations } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import ProductDetailsClient from "./ProductDetailsClient";
 
 interface ProductPageProps {
@@ -9,10 +9,10 @@ interface ProductPageProps {
 
 export default async function ProductPage({ params }: ProductPageProps) {
   const { locale, slug } = await params;
+  setRequestLocale(locale);
   const product = await getDbProductBySlug(slug);
   if (!product) notFound();
 
-  const t = await getTranslations({ locale, namespace: "products_page" });
   const isAr = locale === "ar";
   const name = isAr ? product.nameAr : product.nameEn;
 
@@ -42,5 +42,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <ProductDetailsClient locale={locale} product={product} />
       </div>
     </div>
+  );
+}
+
+export async function generateStaticParams() {
+  const { staticProducts } = await import("@/lib/products-data");
+  const locales = ["ar", "en"];
+  
+  return locales.flatMap((locale) =>
+    staticProducts.map((product) => ({
+      locale,
+      slug: product.slug,
+    }))
   );
 }

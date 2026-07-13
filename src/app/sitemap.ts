@@ -16,7 +16,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "peanut-butter",
     "sesame-tahini",
     "white-sesame",
-    "industrial-peanuts",
+    "roasted-sesame",
+    "sesame-oil",
+    "industrial-bulk-peanuts",
   ];
 
   const localeRoutes = staticRoutes.flatMap(({ path, priority, changeFreq }) => [

@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 import { Cairo, Poppins } from "next/font/google";
 import "../globals.css";
 import LenisScroll from "@/components/LenisScroll";
@@ -131,9 +135,11 @@ export default async function LocaleLayout({
 }) {
   const { locale } = await params;
 
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as "ar" | "en")) {
     notFound();
   }
+
+  setRequestLocale(locale);
 
   const messages = await getMessages();
   const dir = locale === "ar" ? "rtl" : "ltr";

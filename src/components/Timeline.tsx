@@ -1,5 +1,7 @@
 "use client";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { useTranslations } from "next-intl";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useRef } from "react";

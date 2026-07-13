@@ -1,5 +1,5 @@
 import { getDbProducts } from "@/lib/products-data";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import ProductsCatalogClient from "./ProductsCatalogClient";
 
 interface ProductsPageProps {
@@ -9,6 +9,7 @@ interface ProductsPageProps {
 
 export default async function ProductsPage({ params, searchParams }: ProductsPageProps) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const { cat } = await searchParams;
   const initialCategory = cat || "all";
   const products = await getDbProducts();
@@ -48,4 +49,8 @@ export default async function ProductsPage({ params, searchParams }: ProductsPag
       </div>
     </div>
   );
+}
+
+export function generateStaticParams() {
+  return [{ locale: "ar" }, { locale: "en" }];
 }

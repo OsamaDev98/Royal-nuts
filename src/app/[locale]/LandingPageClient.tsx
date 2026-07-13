@@ -25,18 +25,17 @@ import {
 } from "lucide-react";
 import FaqAccordion from "./FaqAccordion";
 import { Link } from "@/i18n/routing";
+import { type ProductData } from "@/lib/products-data";
 
 interface LandingPageClientProps {
   locale: string;
-  featuredProducts: any[];
+  featuredProducts: ProductData[];
 }
 
 /* ─── Palette constants ──────────────────────────────────────── */
 const BG = "#1C2820"; // main bg
 const BG_ALT = "#162018"; // alternate darker sections
 const SURFACE = "#26342C"; // card / panel bg
-const SURFACE2 = "#2E3E36"; // elevated surface
-const CREAM = "#EDE6D0"; // light section bg
 const TEXT = "#F0EDE8"; // primary text
 const GOLD = "#C9A84C";
 const GREEN = "#1F5E3B";
@@ -721,7 +720,7 @@ export default function LandingPageClient({
                     className="absolute top-5 right-6 text-6xl font-black leading-none select-none"
                     style={{ color: `${GOLD}10` }}
                   >
-                    "
+                    &quot;
                   </span>
                   <div className="flex gap-0.5 mb-5">
                     {Array.from({ length: test.rating }).map((_, i) => (

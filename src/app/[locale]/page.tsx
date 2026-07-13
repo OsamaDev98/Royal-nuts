@@ -1,4 +1,5 @@
 import { getDbProducts, type ProductData } from "@/lib/products-data";
+import { setRequestLocale } from "next-intl/server";
 import LandingPageClient from "./LandingPageClient";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://royal-nuts.net";
@@ -9,6 +10,7 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const products = await getDbProducts();
   const featuredProducts = products.filter((p: ProductData) => p.isFeatured).slice(0, 4);
 
