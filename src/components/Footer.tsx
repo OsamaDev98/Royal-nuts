@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { Phone, Mail, MapPin, MessageCircle, ArrowUpRight } from "lucide-react";
+import Image from "next/image";
 
 interface FooterProps {
   locale: string;
@@ -25,11 +26,7 @@ export default function Footer({ locale }: FooterProps) {
     { label: t("products_page.filter_peanut"), href: "/products?cat=peanut" },
     { label: t("products_page.filter_butter"), href: "/products?cat=butter" },
     { label: t("products_page.filter_tahini"), href: "/products?cat=tahini" },
-    { label: t("products_page.filter_sesame"), href: "/products?cat=sesame" },
-    {
-      label: t("products_page.filter_industrial"),
-      href: "/products?cat=industrial",
-    },
+    { label: t("products_page.filter_other"), href: "/products?cat=other" },
   ];
 
   return (
@@ -97,20 +94,22 @@ export default function Footer({ locale }: FooterProps) {
           {/* Brand */}
           <div className="space-y-6 lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 group">
-              <div
-                className="w-11 h-11 rounded-xl flex items-center justify-center shadow-lg"
-                style={{
-                  background: "linear-gradient(135deg,#C9A84C,#8B6820)",
-                }}
-              >
-                <span className="text-xl">🥜</span>
+              <div className="relative w-12 h-12 flex items-center justify-center transition-all duration-300">
+                <Image
+                  src="/logo.png"
+                  alt="Royal Nuts"
+                  width={48}
+                  height={48}
+                  priority
+                  className="object-contain hover:scale-105 transition-transform duration-300"
+                />
               </div>
               <div>
                 <span className="block text-[#F0EDE8] font-black text-lg leading-tight">
                   {isAr ? "مصنع رويال" : "Royal Nuts"}
                 </span>
                 <span className="text-[10px] text-[#C9A84C] font-semibold tracking-widest uppercase">
-                  {isAr ? "للفول والسمسم" : "Peanuts & Sesame"}
+                  {isAr ? "للفول السوداني" : "Peanuts"}
                 </span>
               </div>
             </Link>
@@ -201,7 +200,7 @@ export default function Footer({ locale }: FooterProps) {
                 {
                   Icon: MapPin,
                   value: t("contact.location"),
-                  href: "https://maps.google.com",
+                  href: "https://goo.gl/maps/sGYpCSWKGuYC7VD28?g_st=aw",
                 },
                 {
                   Icon: Phone,
@@ -239,8 +238,8 @@ export default function Footer({ locale }: FooterProps) {
           <p className="text-[#F0EDE8]/25 text-xs">
             © {currentYear}{" "}
             {isAr
-              ? "مصنع رويال للفول السوداني والسمسم. جميع الحقوق محفوظة."
-              : "Royal Peanut & Sesame Factory. All Rights Reserved."}
+              ? "مصنع رويال للفول السوداني. جميع الحقوق محفوظة."
+              : "Royal Peanut Factory. All Rights Reserved."}
           </p>
           <p className="text-[#F0EDE8]/25 text-xs">
             <a

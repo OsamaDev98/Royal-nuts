@@ -139,39 +139,35 @@ export default function LandingPageClient({
   const testimonials = [
     {
       name: isAr ? "م. أحمد عبد الرحمن" : "Eng. Ahmed Abdelrahman",
-      role: isAr
-        ? "مدير مصنع حلواني الشرق"
-        : "Director at Al-Sharq Confectionery",
+      role: isAr ? "مدير مصنع" : "Director of Factory",
       text: isAr
-        ? "نتعامل مع المصنع منذ 5 سنوات لتوريد الفول السوداني المجروش. دقة الفرز الإلكتروني ونظافة المنتج وفرت علينا الكثير من الوقت والتالف."
-        : "We have dealt with the factory for 5 years for supplying crushed peanuts. The precision of electronic sorting saved us time and waste.",
+        ? "نتعامل مع المصنع منذ 2 سنوات لتوريد الفول السوداني المجروش. دقة الفرز الإلكتروني ونظافة المنتج وفرت علينا الكثير من الوقت والتالف."
+        : "We have dealt with the factory for 2 years for supplying crushed peanuts. The precision of electronic sorting saved us time and waste.",
       rating: 5,
     },
     {
-      name: isAr ? "أ. ديانا كوفاتش" : "Ms. Diana Kovacs",
-      role: isAr
-        ? "مديرة استيراد — يوروفود (بودابست)"
-        : "Import Manager — EuroFood Co. (Budapest)",
+      name: isAr ? "أ. السيد محمد" : "Mr. El-Sayed Mohamed",
+      role: isAr ? "مدير استيراد" : "Import Manager",
       text: isAr
-        ? "طحينة السمسم والسمسم الأبيض الذي نستورده من مصنع رويال يطابق المعايير الأوروبية تماماً. نوصي بشدة بالتعامل معهم."
-        : "The sesame tahini and white sesame seeds we import from Royal Nuts fully match European standards. We highly recommend them.",
+        ? "طحينة السمسم والسمسم الأبيض الذي نستورده من مصنع رويال يطابق المعايير العالمية تماماً. نوصي بشدة بالتعامل معهم."
+        : "The sesame tahini and white sesame seeds we import from Royal Nuts fully match global standards. We highly recommend them.",
       rating: 5,
     },
     {
-      name: isAr ? "كابتن عمر جلال" : "Captain Omar Galal",
-      role: isAr ? "مالك سلسلة نوادي فتنس لايف" : "Owner of Fitness Life Clubs",
+      name: isAr ? "عمر جلال" : "Omar Galal",
+      role: isAr ? "موزع معتمد" : "Authorized Distributor",
       text: isAr
-        ? "زبدة الفول السوداني طبيعية 100% وبدون أي إضافات — الخيار الأول لكافة المتدربين لدينا. طعم مميز وسعر منافس."
-        : "The peanut butter is 100% natural with no additives — first choice for all our trainees. Great taste and very competitive price.",
+        ? "جودة الفول السوداني الطبيعي ممتازة، والطعم رائع. أسعار المصنع تنافسية جداً، ونتعامل معهم منذ سنوات."
+        : "The quality of the natural peanuts is excellent, and the taste is great. The factory's prices are very competitive, and we have been dealing with them for years.",
       rating: 5,
     },
   ];
 
   const stats = [
-    { value: 20, suffix: "+", label: isAr ? "سنة خبرة" : "Years Experience" },
-    { value: 5000, suffix: "+", label: isAr ? "طن سنوياً" : "Tons / Year" },
-    { value: 35, suffix: "+", label: isAr ? "متخصص" : "Specialists" },
-    { value: 15, suffix: "+", label: isAr ? "دولة تصدير" : "Export Countries" },
+    { value: 5, suffix: "+", label: isAr ? "سنة خبرة" : "Years Experience" },
+    { value: 100, suffix: "+", label: isAr ? "طن سنوياً" : "Tons / Year" },
+    { value: 15, suffix: "+", label: isAr ? "متخصص" : "Specialists" },
+    { value: 3, suffix: "+", label: isAr ? "دولة تصدير" : "Export Countries" },
   ];
 
   return (
@@ -180,7 +176,7 @@ export default function LandingPageClient({
       <section className="relative h-screen min-h-[600px] flex items-center justify-center text-white overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="/images/raw_peanuts.png"
+            src="/images/hero_background.png"
             alt="Royal Nuts Factory"
             fill
             priority
@@ -398,7 +394,7 @@ export default function LandingPageClient({
                   style={{ border: `1px solid ${GOLD}28` }}
                 >
                   <Image
-                    src="/images/gallery_factory_ext.png"
+                    src="/images/gallery_factory_ext.webp"
                     alt="Royal Nuts Factory"
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -832,7 +828,7 @@ export default function LandingPageClient({
                       Icon: MapPin,
                       label: t("common.address"),
                       value: t("contact.location"),
-                      href: "https://maps.google.com",
+                      href: "https://goo.gl/maps/sGYpCSWKGuYC7VD28?g_st=aw",
                     },
                     {
                       Icon: Phone,
@@ -921,7 +917,7 @@ export default function LandingPageClient({
                     {t("contact.location")}
                   </p>
                   <a
-                    href="https://maps.google.com"
+                    href="https://goo.gl/maps/sGYpCSWKGuYC7VD28?g_st=aw"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="mt-3 px-4 py-1.5 rounded-full text-xs font-bold hover:opacity-90"

@@ -1,6 +1,6 @@
 {
   "common": {
-    "title": "Royal Nuts | Peanuts & Sesame",
+    "title": "Royal Nuts | Peanuts",
     "description": "From the heart of the factory... we offer you natural products with quality you can trust. Electronic sorting, packaging, and global quality export.",
     "whatsapp": "Contact via WhatsApp",
     "call": "Call Us",
@@ -23,7 +23,7 @@
   },
   "hero": {
     "title": "Pure Quality, From Our Factory to Your Table",
-    "subtitle": "Pioneers in sorting peanuts & sesame and producing 100% natural peanut butter and tahini using the latest global technologies.",
+    "subtitle": "Pioneers in sorting Peanuts and producing 100% natural peanut butter and tahini using the latest global technologies.",
     "btnDiscover": "Discover Products",
     "btnAbout": "Learn About Factory"
   },
@@ -106,8 +106,8 @@
     "a2": "We use the latest electronic sorting machines (laser optical sorting) which inspect every single grain and reject damaged grains or impurities automatically with extreme accuracy, followed by manual check.",
     "q3": "Does the factory supply commercial quantities for other manufacturers?",
     "a3": "Yes, we have a specialized division for industrial orders (like confectionery factories and bakeries) providing large scale bulk packaging (sacks and buckets) according to required specifications.",
-    "q4": "Which countries do you export to? What are the requirements?",
-    "a4": "We currently export to over 15 countries in the Middle East, Europe, and Africa. We provide all required health and environmental certifications and customs documents for international shipping.",
+    "q4": "What products does the factory manufacture?",
+    "a4": "We manufacture and package a variety of natural products, including roasted peanuts, various types of peanut butter, various types of tahini, natural sesame, as well as other products upon request.",
     "q5": "How can I order products or ask about prices?",
     "a5": "You can order products directly through the website by clicking 'Order Now' on the product page, filling the contact form, or contacting us directly via WhatsApp for an immediate response."
   },
@@ -128,7 +128,7 @@
     "validation_email": "Please enter a valid email address.",
     "validation_phone": "Please enter a valid phone number.",
     "validation_message": "Message must be at least 10 characters.",
-    "location": "Industrial Zone, Peanut and Sesame Processing & Packaging Facility"
+    "location": "Peanut and Sesame Processing & Packaging Facility"
   },
   "products_page": {
     "title": "Our Premium Products",
@@ -137,6 +137,7 @@
     "filter_peanut": "Peanuts",
     "filter_butter": "Peanut Butter",
     "filter_tahini": "Tahini",
+    "filter_other": "Other Products",
     "filter_sesame": "Sesame & Oils",
     "filter_industrial": "For Factories",
     "nutritional_facts": "Nutritional Facts (Per 100g)",

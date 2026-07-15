@@ -28,11 +28,15 @@ export default function AnimatedCounter({ value }: AnimatedCounterProps) {
     return springValue.on("change", (latest) => {
       if (ref.current) {
         ref.current.textContent = Intl.NumberFormat("en-US").format(
-          Math.floor(latest)
+          Math.floor(latest),
         );
       }
     });
   }, [springValue]);
 
-  return <span ref={ref} className="tabular-nums">0</span>;
+  return (
+    <span ref={ref} className="tabular-nums">
+      0
+    </span>
+  );
 }
