@@ -434,7 +434,7 @@ export default function LandingPageClient({
       {/* ════════════════════ 3. PRODUCTION STAGES ════════════════════ */}
       <section
         id="stages"
-        className="py-24 md:py-32 relative scroll-mt-20"
+        className="py-16 md:py-0 relative scroll-mt-20 overflow-hidden"
         style={{ background: BG_ALT }}
       >
         <div
@@ -444,18 +444,23 @@ export default function LandingPageClient({
               "radial-gradient(ellipse 60% 50% at 50% 100%, rgba(31,94,59,0.14), transparent)",
           }}
         />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Mobile Header: Visible only on mobile */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 md:hidden pt-16">
           <FadeIn>
-            <div className="text-center mb-16 md:mb-20">
+            <div className="text-center mb-12">
               <SectionLabel>{t("stages.subtitle")}</SectionLabel>
               <h2
-                className="text-3xl sm:text-4xl md:text-5xl font-black mt-4"
+                className="text-3xl sm:text-4xl font-black mt-4"
                 style={{ color: TEXT }}
               >
                 {t("stages.title")}
               </h2>
             </div>
           </FadeIn>
+        </div>
+
+        {/* Timeline wrapper: Full width on desktop, standard padding container on mobile */}
+        <div className="w-full md:max-w-none md:px-0 mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-0">
           <Timeline />
         </div>
       </section>
@@ -514,6 +519,8 @@ export default function LandingPageClient({
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                       className="object-cover group-hover:scale-110 transition-transform duration-700"
+                      loading={idx === 0 ? "eager" : "lazy"}
+                      priority={idx === 0}
                     />
                     <div
                       className="absolute inset-0 bg-gradient-to-t opacity-60"

@@ -2,253 +2,320 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { useTranslations } from "next-intl";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useTranslations, useLocale } from "next-intl";
+import { useEffect, useRef } from "react";
+import Image from "next/image";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Sprout, Cpu, Sparkles, Search, Flame, Package, Truck } from "lucide-react";
 
 /* ─── Data ───────────────────────────────────────────────────── */
 const STEPS = [
-  { titleKey: "stage1_title", descKey: "stage1_desc", Icon: Sprout,   color: "#3D9962" },
-  { titleKey: "stage2_title", descKey: "stage2_desc", Icon: Cpu,      color: "#C9A84C" },
-  { titleKey: "stage3_title", descKey: "stage3_desc", Icon: Sparkles, color: "#8B5A2B" },
-  { titleKey: "stage4_title", descKey: "stage4_desc", Icon: Search,   color: "#3D9962" },
-  { titleKey: "stage5_title", descKey: "stage5_desc", Icon: Flame,    color: "#C9A84C" },
-  { titleKey: "stage6_title", descKey: "stage6_desc", Icon: Package,  color: "#8B5A2B" },
-  { titleKey: "stage7_title", descKey: "stage7_desc", Icon: Truck,    color: "#3D9962" },
+  {
+    titleKey: "stage1_title",
+    descKey: "stage1_desc",
+    Icon: Sprout,
+    color: "#3D9962",
+    image: "/images/stage1_receipt.png",
+  },
+  {
+    titleKey: "stage2_title",
+    descKey: "stage2_desc",
+    Icon: Cpu,
+    color: "#C9A84C",
+    image: "/images/stage2_sorting.png",
+  },
+  {
+    titleKey: "stage3_title",
+    descKey: "stage3_desc",
+    Icon: Sparkles,
+    color: "#8B5A2B",
+    image: "/images/stage3_impurities.png",
+  },
+  {
+    titleKey: "stage4_title",
+    descKey: "stage4_desc",
+    Icon: Search,
+    color: "#3D9962",
+    image: "/images/stage4_manual.png",
+  },
+  {
+    titleKey: "stage5_title",
+    descKey: "stage5_desc",
+    Icon: Flame,
+    color: "#C9A84C",
+    image: "/images/stage5_roasting.png",
+  },
+  {
+    titleKey: "stage6_title",
+    descKey: "stage6_desc",
+    Icon: Package,
+    color: "#8B5A2B",
+    image: "/images/stage6_packaging.png",
+  },
+  {
+    titleKey: "stage7_title",
+    descKey: "stage7_desc",
+    Icon: Truck,
+    color: "#3D9962",
+    image: "/images/stage7_export.png",
+  },
 ] as const;
 
-/* ─── Shared Card Visual ──────────────────────────────────────── */
-function Card({
-  step,
-  t,
-  alignRight = false,
-}: {
-  step: (typeof STEPS)[number];
-  t: ReturnType<typeof useTranslations>;
-  alignRight?: boolean;
-}) {
-  const { Icon, color, titleKey, descKey } = step;
-  return (
-    <div
-      className="p-5 sm:p-6 rounded-2xl group transition-all duration-300 hover:scale-[1.02] w-full"
-      style={{
-        background: "#2E3E36",
-        border: "1px solid rgba(201,168,76,0.20)",
-        boxShadow: "0 4px 20px rgba(0,0,0,0.20)",
-      }}
-    >
-      <div className={`flex items-center gap-3 mb-3 ${alignRight ? "flex-row-reverse" : ""}`}>
-        <div
-          className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110"
-          style={{ background: color + "28" }}
-        >
-          <Icon className="w-5 h-5" style={{ color }} />
-        </div>
-        <h3 className="text-sm sm:text-base font-bold text-[#F0EDE8] leading-snug">
-          {t(titleKey as any)}
-        </h3>
-      </div>
-      <p
-        className={`text-[#F0EDE8]/50 text-xs sm:text-sm leading-relaxed ${alignRight ? "text-end" : ""}`}
-      >
-        {t(descKey as any)}
-      </p>
-    </div>
-  );
-}
+export default function Timeline() {
+  const t = useTranslations("stages");
+  const locale = useLocale();
+  const isAr = locale === "ar";
 
-/* ─── MOBILE: single column, left-rail ───────────────────────── */
-function MobileTimeline({ t }: { t: ReturnType<typeof useTranslations> }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const progressBarRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const mm = gsap.matchMedia();
+
+    // DESKTOP: horizontal scroll pinning
+    mm.add("(min-width: 768px)", () => {
+      const track = trackRef.current;
+      if (!track) return;
+
+      const trackWidth = track.scrollWidth;
+      const viewportWidth = window.innerWidth;
+      const scrollDistance = trackWidth - viewportWidth;
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: `+=${scrollDistance}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+
+      // Animate track translation horizontally (LTR flow)
+      tl.to(track, {
+        x: -scrollDistance,
+        ease: "none",
+      }, 0);
+
+      // Animate horizontal progress bar
+      tl.to(progressBarRef.current, {
+        scaleX: 1,
+        ease: "none",
+      }, 0);
+    });
+
+    // MOBILE: simple vertical list with scroll-triggered fade-ins
+    mm.add("(max-width: 767px)", () => {
+      const cards = gsap.utils.toArray(".mobile-step-card");
+      cards.forEach((card: any) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 40 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.65,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none none",
+            },
+          }
+        );
+      });
+    });
+
+    // Delayed refresh to ensure accurate layout width measurement after rendering completes
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 600);
+
+    return () => {
+      clearTimeout(timer);
+      mm.revert();
+    };
+  }, []);
+
   return (
-    <div className="relative px-2 md:hidden">
-      {/* Rail */}
+    <div className="w-full">
+      {/* ─── DESKTOP VIEW (Horizontal Scroll) ─── */}
       <div
-        className="absolute top-0 bottom-0"
-        style={{ left: "18px", width: "1px", background: "rgba(201,168,76,0.15)" }}
-      />
+        ref={containerRef}
+        className="hidden md:flex relative w-full h-screen flex-col justify-center gap-16 overflow-hidden"
+        dir="ltr" // Force LTR for layout and scroll math stability across locales
+      >
+        {/* Pinned Section Header inside Viewport */}
+        <div className="text-center shrink-0 z-20">
+          <span className="text-[#C9A84C] text-xs font-bold uppercase tracking-[0.2em]">
+            {t("subtitle")}
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mt-3 text-[#F0EDE8]">
+            {t("title")}
+          </h2>
+        </div>
 
-      <div className="flex flex-col">
+        {/* Horizontal track viewport wrapper */}
+        <div className="w-full overflow-hidden shrink-0">
+          <div
+            ref={trackRef}
+            className="flex flex-row items-start relative px-[25vw] gap-16 py-8"
+            style={{ width: "max-content" }}
+          >
+            {/* Connecting Track Line (Fixed width to avoid circular rendering width recalculation issues) */}
+            <div
+              className="absolute top-[56px] bg-white/10 z-0 pointer-events-none"
+              style={{
+                left: "calc(25vw + 210px)",
+                width: "2904px",
+                height: "3px",
+              }}
+            />
+            
+            {/* Glowing Active Progress Line */}
+            <div
+              ref={progressBarRef}
+              className="absolute top-[56px] bg-[#C9A84C] origin-left scale-x-0 z-0 pointer-events-none"
+              style={{
+                left: "calc(25vw + 210px)",
+                width: "2904px",
+                height: "3px",
+                boxShadow: "0 0 10px #C9A84C",
+              }}
+            />
+
+            {STEPS.map((step, idx) => {
+              const { Icon, color, titleKey, descKey, image } = step;
+              return (
+                <div
+                  key={idx}
+                  className="w-[380px] sm:w-[420px] flex flex-col items-center shrink-0 relative z-10"
+                >
+                  {/* Step Circle Pin */}
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center font-black text-sm mb-8 relative transition-transform duration-300 hover:scale-110"
+                    style={{
+                      background: "linear-gradient(135deg,#C9A84C,#8B6820)",
+                      color: "#1C2820",
+                      boxShadow: "0 0 0 6px #1C2820, 0 0 0 8px rgba(201,168,76,0.25)",
+                    }}
+                  >
+                    {idx + 1}
+                  </div>
+
+                  {/* Slide Card Container */}
+                  <div
+                    className="w-full rounded-[2.5rem] overflow-hidden p-1 flex flex-col transition-all duration-300 hover:scale-[1.02]"
+                    style={{
+                      background: "#26342C",
+                      border: "1px solid rgba(201,168,76,0.18)",
+                      boxShadow: "0 15px 35px rgba(0,0,0,0.3)",
+                    }}
+                  >
+                    {/* Stage Image */}
+                    <div className="relative aspect-[16/10] w-full rounded-[2.2rem] overflow-hidden">
+                      <Image
+                        src={image}
+                        alt={t(titleKey as any)}
+                        fill
+                        sizes="420px"
+                        className="object-cover hover:scale-105 transition-transform duration-700"
+                        priority={idx === 0}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#26342C]/90 via-transparent to-transparent" />
+                    </div>
+
+                    {/* Card Content (aligned using locale direction) */}
+                    <div
+                      className={`p-6 sm:p-8 flex flex-col gap-3 ${isAr ? "text-right" : "text-left"}`}
+                      dir={isAr ? "rtl" : "ltr"}
+                    >
+                      <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse" : "flex-row"}`}>
+                        <div
+                          className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                          style={{ background: color + "20" }}
+                        >
+                          <Icon className="w-5 h-5" style={{ color }} />
+                        </div>
+                        <h3 className="text-lg font-black text-[#F0EDE8] leading-snug">
+                          {t(titleKey as any)}
+                        </h3>
+                      </div>
+                      <p className="text-[#F0EDE8]/55 text-sm leading-relaxed">
+                        {t(descKey as any)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* ─── MOBILE VIEW ─── */}
+      <div className="md:hidden flex flex-col gap-8 px-4">
         {STEPS.map((step, idx) => {
-          const isLast = idx === STEPS.length - 1;
+          const { Icon, color, titleKey, descKey, image } = step;
           return (
-            <MobileItem key={idx} step={step} idx={idx} t={t} isLast={isLast} />
+            <div
+              key={idx}
+              className="mobile-step-card flex flex-col rounded-3xl overflow-hidden"
+              style={{
+                background: "#26342C",
+                border: "1px solid rgba(201,168,76,0.18)",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.15)",
+              }}
+            >
+              {/* Image with overlay */}
+              <div className="relative aspect-[16/10] w-full">
+                <Image
+                  src={image}
+                  alt={t(titleKey as any)}
+                  fill
+                  sizes="(max-width: 640px) calc(100vw - 2rem), (max-width: 768px) calc(100vw - 3rem), 420px"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#26342C] via-transparent to-transparent" />
+                <span
+                  className="absolute top-4 left-4 w-7 h-7 rounded-full flex items-center justify-center font-black text-xs text-[#1C2820]"
+                  style={{
+                    background: "linear-gradient(135deg,#C9A84C,#E8C875)",
+                    boxShadow: "0 2px 10px rgba(201,168,76,0.3)",
+                  }}
+                >
+                  {idx + 1}
+                </span>
+              </div>
+
+              {/* Card content details */}
+              <div
+                className={`p-6 flex flex-col gap-3 ${isAr ? "text-right" : "text-left"}`}
+                dir={isAr ? "rtl" : "ltr"}
+              >
+                <div className={`flex items-center gap-3 ${isAr ? "flex-row-reverse" : "flex-row"}`}>
+                  <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                    style={{ background: color + "20" }}
+                  >
+                    <Icon className="w-4 h-4" style={{ color }} />
+                  </div>
+                  <h3 className="text-base font-bold text-[#F0EDE8]">
+                    {t(titleKey as any)}
+                  </h3>
+                </div>
+                <p className="text-[#F0EDE8]/50 text-xs leading-relaxed">
+                  {t(descKey as any)}
+                </p>
+              </div>
+            </div>
           );
         })}
       </div>
-    </div>
-  );
-}
-
-function MobileItem({
-  step, idx, t, isLast,
-}: {
-  step: (typeof STEPS)[number];
-  idx: number;
-  t: ReturnType<typeof useTranslations>;
-  isLast: boolean;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-
-  return (
-    <div ref={ref} className="flex items-start">
-      {/* Circle + rail segment */}
-      <div className="flex flex-col items-center shrink-0" style={{ width: "36px" }}>
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={inView ? { scale: 1, opacity: 1 } : {}}
-          transition={{ type: "spring", stiffness: 120, delay: 0.1 }}
-          className="w-9 h-9 rounded-full flex items-center justify-center font-black text-xs z-10 shrink-0"
-          style={{
-            background: "linear-gradient(135deg,#C9A84C,#8B6820)",
-            color: "#1C2820",
-            boxShadow: "0 0 0 3px #1C2820, 0 0 0 4px rgba(201,168,76,0.35)",
-          }}
-        >
-          {idx + 1}
-        </motion.div>
-        {!isLast && (
-          <div
-            className="flex-1 w-px mt-1"
-            style={{ background: "rgba(201,168,76,0.15)", minHeight: "16px" }}
-          />
-        )}
-      </div>
-
-      {/* Card */}
-      <motion.div
-        initial={{ opacity: 0, x: 20 }}
-        animate={inView ? { opacity: 1, x: 0 } : {}}
-        transition={{ duration: 0.55, ease: [0.25, 0.46, 0.45, 0.94] }}
-        className={`flex-1 ms-4 ${isLast ? "" : "mb-5"}`}
-      >
-        <Card step={step} t={t} />
-      </motion.div>
-    </div>
-  );
-}
-
-/* ─── DESKTOP: 3-column alternating grid ─────────────────────── */
-function DesktopTimeline({ t }: { t: ReturnType<typeof useTranslations> }) {
-  return (
-    /* 3 explicit columns: left | circle | right */
-    <div
-      className="hidden md:grid gap-y-5"
-      style={{ gridTemplateColumns: "1fr 40px 1fr" }}
-    >
-      {STEPS.map((step, idx) => (
-        /* Each step = exactly 3 grid cells rendered via Fragment */
-        <DesktopRow key={idx} step={step} idx={idx} t={t} />
-      ))}
-    </div>
-  );
-}
-
-function DesktopRow({
-  step, idx, t,
-}: {
-  step: (typeof STEPS)[number];
-  idx: number;
-  t: ReturnType<typeof useTranslations>;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
-  const isEven = idx % 2 === 0;
-
-  return (
-    <>
-      {/* LEFT cell */}
-      <div className="flex justify-end items-center pe-8 py-2">
-        {!isEven && (
-          <motion.div
-            ref={ref}
-            initial={{ opacity: 0, x: -28 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="w-full max-w-xs"
-          >
-            <Card step={step} t={t} alignRight />
-          </motion.div>
-        )}
-      </div>
-
-      {/* CENTRE cell — circle */}
-      <div ref={isEven ? ref : undefined} className="flex items-center justify-center py-2">
-        <motion.div
-          initial={{ scale: 0, opacity: 0 }}
-          animate={inView ? { scale: 1, opacity: 1 } : {}}
-          transition={{ type: "spring", stiffness: 120, delay: 0.15 }}
-          className="w-10 h-10 rounded-full flex items-center justify-center font-black text-sm z-10"
-          style={{
-            background: "linear-gradient(135deg,#C9A84C,#8B6820)",
-            color: "#1C2820",
-            boxShadow: "0 0 0 4px #1C2820, 0 0 0 5px rgba(201,168,76,0.30)",
-          }}
-        >
-          {idx + 1}
-        </motion.div>
-      </div>
-
-      {/* RIGHT cell */}
-      <div className="flex justify-start items-center ps-8 py-2">
-        {isEven && (
-          <motion.div
-            initial={{ opacity: 0, x: 28 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="w-full max-w-xs"
-          >
-            <Card step={step} t={t} />
-          </motion.div>
-        )}
-      </div>
-    </>
-  );
-}
-
-/* ─── Main export ─────────────────────────────────────────────── */
-export default function Timeline() {
-  const t = useTranslations("stages");
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end end"],
-  });
-  const pathLength = useTransform(scrollYProgress, [0, 0.9], [0, 1]);
-
-  return (
-    <div ref={containerRef} className="relative max-w-4xl mx-auto">
-      {/* Desktop centre vertical track */}
-      <div
-        className="absolute top-0 bottom-0 hidden md:block pointer-events-none"
-        style={{
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "1px",
-          background: "rgba(201,168,76,0.15)",
-        }}
-      />
-      <motion.div
-        style={{
-          scaleY: pathLength,
-          originY: 0,
-          position: "absolute",
-          left: "50%",
-          transform: "translateX(-50%)",
-          top: 0,
-          bottom: 0,
-          width: "2px",
-          background: "linear-gradient(to bottom,#C9A84C,#1F5E3B)",
-          pointerEvents: "none",
-        }}
-        className="hidden md:block"
-      />
-
-      {/* Separate mobile + desktop renders — no shared DOM */}
-      <MobileTimeline t={t} />
-      <DesktopTimeline t={t} />
     </div>
   );
 }
